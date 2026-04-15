@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 
 const NAV_LINKS = [
   { label: 'Inicio',     href: '#hero'     },
@@ -10,104 +10,200 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false)
-  const [menuOpen, setMenuOpen]   = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden]     = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [active, setActive]     = useState('#hero')
 
+  const { scrollY } = useScroll()
+  const prevScroll   = useState(0)
+
+  // Hide on scroll down, show on scroll up
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const prev = prevScroll[0]
+    if (latest > prev && latest > 200) {
+      setHidden(true)
+      setMenuOpen(false)
+    } else {
+      setHidden(false)
+    }
+    prevScroll[0] = latest
+    setScrolled(latest > 60)
+  })
+
+  // Track active section
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActive(`#${entry.target.id}`)
+          }
+        })
+      },
+      { threshold: 0.3, rootMargin: '-80px 0px -40% 0px' }
+    )
+
+    NAV_LINKS.forEach(link => {
+      const el = document.querySelector(link.href)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
   }, [])
 
   return (
     <motion.nav
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      initial={{ y: -100, opacity: 0 }}
+      animate={{
+        y: hidden ? -100 : 0,
+        opacity: hidden ? 0 : 1,
+      }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
         scrolled
-          ? 'bg-tt-bg/95 backdrop-blur-md border-b border-tt-navy/40 shadow-lg shadow-tt-navy/20'
+          ? 'bg-tt-bg/80 backdrop-blur-xl border-b border-white/[0.04] shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#hero" className="flex-shrink-0">
-          <img
-            src="/assets/tt/1.png"
-            alt="Ti Turing"
-            className="h-10 w-auto rounded-lg"
-          />
+        {/* Logo with hover effect */}
+        <a
+          href="#hero"
+          className="flex-shrink-0 group"
+          data-cursor-hover
+        >
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative"
+          >
+            <img
+              src="/assets/tt/1.png"
+              alt="Ti Turing"
+              className="h-9 w-auto rounded-lg transition-shadow duration-300
+                         group-hover:shadow-[0_0_20px_#1c348060]"
+            />
+          </motion.div>
         </a>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8">
+        {/* Desktop links with active indicator */}
+        <ul className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map(link => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="font-heading text-sm tracking-widest text-white/60
-                           hover:text-tt-cyan transition-colors duration-200"
+                data-cursor-hover
+                className={`relative px-4 py-2 font-heading text-[13px] tracking-wider
+                           transition-colors duration-200 rounded-md ${
+                  active === link.href
+                    ? 'text-tt-cyan'
+                    : 'text-white/45 hover:text-white/80'
+                }`}
               >
                 {link.label}
+                {/* Active dot */}
+                {active === link.href && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-tt-cyan"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
               </a>
             </li>
           ))}
         </ul>
 
         {/* Desktop CTA */}
-        <a
+        <motion.a
           href="#contact"
-          className="hidden md:inline-flex items-center px-5 py-2 rounded
-                     bg-tt-navy hover:bg-tt-blue border border-tt-blue/30
-                     font-heading text-sm tracking-wider text-white
-                     transition-all duration-200 hover:shadow-[0_0_18px_#3b82f650]"
+          data-cursor-hover
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-lg
+                     bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08]
+                     hover:border-white/[0.15] font-heading text-[13px] tracking-wider
+                     text-white/80 hover:text-white transition-all duration-300
+                     hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]"
         >
+          <span className="w-1.5 h-1.5 rounded-full bg-tt-green animate-pulse" />
           Contáctanos
-        </a>
+        </motion.a>
 
-        {/* Mobile hamburger */}
+        {/* Mobile hamburger - animated */}
         <button
           onClick={() => setMenuOpen(o => !o)}
-          className="md:hidden text-white/80 hover:text-white transition-colors"
+          className="md:hidden relative w-8 h-8 flex items-center justify-center"
           aria-label="Toggle menu"
+          data-cursor-hover
         >
-          <span className="font-mono text-xl">{menuOpen ? '✕' : '☰'}</span>
+          <div className="flex flex-col gap-1.5">
+            <motion.div
+              animate={{
+                rotate: menuOpen ? 45 : 0,
+                y: menuOpen ? 5 : 0,
+              }}
+              className="w-5 h-[1.5px] bg-white/70 origin-center"
+            />
+            <motion.div
+              animate={{
+                opacity: menuOpen ? 0 : 1,
+                scaleX: menuOpen ? 0 : 1,
+              }}
+              className="w-3.5 h-[1.5px] bg-white/50 origin-left"
+            />
+            <motion.div
+              animate={{
+                rotate: menuOpen ? -45 : 0,
+                y: menuOpen ? -5 : 0,
+              }}
+              className="w-5 h-[1.5px] bg-white/70 origin-center"
+            />
+          </div>
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile fullscreen menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-tt-bg/98 backdrop-blur-md border-t border-tt-navy/40 overflow-hidden"
+            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            animate={{ opacity: 1, backdropFilter: 'blur(20px)' }}
+            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden fixed inset-0 top-16 bg-tt-bg/95"
           >
-            <div className="px-6 py-4 space-y-1">
-              {NAV_LINKS.map(link => (
-                <a
+            <div className="flex flex-col items-center justify-center h-full gap-2 -mt-16">
+              {NAV_LINKS.map((link, i) => (
+                <motion.a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block py-3 font-heading text-sm tracking-widest
-                             text-white/60 hover:text-tt-cyan border-b border-tt-navy/20
-                             transition-colors duration-200"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: i * 0.06, duration: 0.3 }}
+                  className={`font-heading text-3xl tracking-wider py-3
+                             transition-colors duration-200 ${
+                    active === link.href ? 'text-tt-cyan' : 'text-white/50 hover:text-white'
+                  }`}
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
-              <a
+
+              <motion.a
                 href="#contact"
                 onClick={() => setMenuOpen(false)}
-                className="block mt-4 py-3 text-center bg-tt-navy hover:bg-tt-blue
-                           font-heading text-sm tracking-wider text-white rounded
-                           transition-colors duration-200"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+                className="mt-6 px-8 py-3 bg-tt-navy/50 border border-tt-blue/30 rounded-lg
+                           font-heading text-lg tracking-wider text-tt-cyan"
               >
                 Contáctanos
-              </a>
+              </motion.a>
             </div>
           </motion.div>
         )}
