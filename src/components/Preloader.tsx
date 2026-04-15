@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
+  const { t } = useTranslation()
   const [progress, setProgress] = useState(0)
   const [phase, setPhase] = useState<'loading' | 'reveal' | 'done'>('loading')
 
@@ -104,7 +106,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            Ti Turing — Software Factory
+            {t('preloader.tagline')}
           </motion.p>
         </motion.div>
       )}

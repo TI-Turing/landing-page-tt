@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 const NAV_LINKS = [
-  { label: 'Inicio',     href: '#hero'     },
-  { label: 'Servicios',  href: '#services' },
-  { label: 'Tech Stack', href: '#tech'     },
-  { label: 'Nosotros',   href: '#about'    },
-  { label: 'Contacto',   href: '#contact'  },
+  { key: 'nav.home',      href: '#hero'     },
+  { key: 'nav.services',  href: '#services' },
+  { key: 'nav.techStack', href: '#tech'     },
+  { key: 'nav.about',     href: '#about'    },
+  { key: 'nav.contact',   href: '#contact'  },
 ]
 
 export default function Navbar() {
+  const { t, i18n } = useTranslation()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden]     = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -101,7 +103,7 @@ export default function Navbar() {
                     : 'text-white/45 hover:text-white/80'
                 }`}
               >
-                {link.label}
+                {t(link.key)}
                 {/* Active dot */}
                 {active === link.href && (
                   <motion.div
@@ -128,8 +130,20 @@ export default function Navbar() {
                      hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-tt-green animate-pulse" />
-          Contáctanos
+          {t('nav.contactUs')}
         </motion.a>
+
+        {/* Language toggle */}
+        <button
+          onClick={() => i18n.changeLanguage(i18n.language === 'es' ? 'en' : 'es')}
+          data-cursor-hover
+          className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                     bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06]
+                     hover:border-white/[0.12] font-mono text-[11px] tracking-wider
+                     text-white/50 hover:text-white/80 transition-all duration-300 uppercase"
+        >
+          {i18n.language === 'es' ? 'EN' : 'ES'}
+        </button>
 
         {/* Mobile hamburger - animated */}
         <button
@@ -189,7 +203,7 @@ export default function Navbar() {
                     active === link.href ? 'text-tt-cyan' : 'text-white/50 hover:text-white'
                   }`}
                 >
-                  {link.label}
+                  {t(link.key)}
                 </motion.a>
               ))}
 
@@ -202,8 +216,17 @@ export default function Navbar() {
                 className="mt-6 px-8 py-3 bg-tt-navy/50 border border-tt-blue/30 rounded-lg
                            font-heading text-lg tracking-wider text-tt-cyan"
               >
-                Contáctanos
+                {t('nav.contactUs')}
               </motion.a>
+
+              <button
+                onClick={() => { i18n.changeLanguage(i18n.language === 'es' ? 'en' : 'es'); setMenuOpen(false) }}
+                className="mt-4 px-6 py-2 bg-white/[0.04] border border-white/[0.08] rounded-lg
+                           font-mono text-sm tracking-wider text-white/50 hover:text-white/80
+                           transition-all duration-300 uppercase"
+              >
+                {i18n.language === 'es' ? 'English' : 'Español'}
+              </button>
             </div>
           </motion.div>
         )}

@@ -1,0 +1,123 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "techStack": "Tech Stack",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "contactUs": "Contáctanos"
+  },
+  "hero": {
+    "eyebrow": "Fábrica de Software",
+    "typingPhrases": [
+      "Construimos Software.",
+      "Aseguramos tu Sistema.",
+      "Escalamos tu Negocio.",
+      "Creamos Apps Móviles.",
+      "Dominamos el Código."
+    ],
+    "viewServices": "Ver Servicios",
+    "contactUs": "Contáctanos",
+    "scroll": "Scroll",
+    "snippetProjects": "> 200+ proyectos entregados"
+  },
+  "services": {
+    "eyebrow": "// nuestros servicios",
+    "titlePart1": "LO QUE",
+    "titleHighlight": "HACEMOS",
+    "subtitle": "Soluciones tecnológicas de alta calidad para cada etapa de tu negocio.",
+    "items": {
+      "webDev": {
+        "title": "Desarrollo Web",
+        "desc": "Aplicaciones web modernas, SPAs y sistemas enterprise con React, Vue, Angular y Node.js.",
+        "tag": "frontend · backend · fullstack"
+      },
+      "mobileApps": {
+        "title": "Apps Móviles",
+        "desc": "Apps nativas y cross-platform para iOS y Android con React Native y Flutter.",
+        "tag": "iOS · Android · cross-platform"
+      },
+      "cybersecurity": {
+        "title": "Ciberseguridad",
+        "desc": "Auditorías, pentesting, hardening y protección de infraestructura crítica.",
+        "tag": "pentest · auditoría · hardening"
+      },
+      "customSoftware": {
+        "title": "Software a Medida",
+        "desc": "Sistemas ERP, CRM y plataformas SaaS diseñadas exactamente para tu negocio.",
+        "tag": "ERP · CRM · SaaS"
+      },
+      "techConsulting": {
+        "title": "Consultoría Tech",
+        "desc": "Arquitectura de soluciones, migración cloud, optimización y estrategia digital.",
+        "tag": "cloud · arquitectura · estrategia"
+      },
+      "qaTesting": {
+        "title": "QA & Testing",
+        "desc": "Testing manual, automatizado, E2E y de performance para software confiable.",
+        "tag": "E2E · automatización · performance"
+      }
+    }
+  },
+  "techStack": {
+    "eyebrow": "// tecnologías",
+    "titlePart1": "NUESTRO",
+    "titleHighlight": "STACK",
+    "categories": {
+      "all": "Todas",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "devops": "DevOps",
+      "mobile": "Mobile"
+    }
+  },
+  "about": {
+    "eyebrow": "// nosotros",
+    "titlePart1": "UNA",
+    "titleHighlight": "FÁBRICA",
+    "titlePart2": "DE SOFTWARE",
+    "paragraph1": "Ti Turing es una empresa de desarrollo de software fundada con la misión de construir soluciones tecnológicas de alta calidad que impulsen el crecimiento de empresas y emprendimientos.",
+    "paragraph2": "Combinamos metodologías ágiles con tecnologías de vanguardia para entregar productos que no solo funcionan — sino que escalan, perduran y generan impacto real.",
+    "tags": ["Metodología Ágil", "Código Escalable", "Seguridad First", "Innovación", "A tu Medida"],
+    "stats": {
+      "projects": "Proyectos\nentregados",
+      "experience": "Años de\nexperiencia",
+      "clients": "Clientes\nsatisfechos",
+      "technologies": "Tecnologías\ndominadas"
+    },
+    "ctaTitle": "Hablemos de tu proyecto",
+    "ctaSubtitle": "Estamos listos para empezar."
+  },
+  "contact": {
+    "eyebrow": "// contacto",
+    "titlePart1": "HABLEMOS DE TU",
+    "titleHighlight": "PROYECTO",
+    "subtitle": "Estamos listos para construir tu próxima solución tecnológica.",
+    "form": {
+      "name": "Tu nombre",
+      "email": "tu@email.com",
+      "message": "Cuéntanos sobre tu proyecto...",
+      "submit": "Enviar Mensaje"
+    },
+    "success": {
+      "title": "Mensaje enviado",
+      "subtitle": "Te contactamos pronto."
+    },
+    "socialLabel": "También puedes encontrarnos en"
+  },
+  "footer": {
+    "readyToBuild": "// ready to build?",
+    "titlePart1": "CONSTRUYAMOS",
+    "titleHighlight": "ALGO GRANDE",
+    "startProject": "Iniciar Proyecto",
+    "links": {
+      "services": "Servicios",
+      "stack": "Stack",
+      "about": "Nosotros",
+      "contact": "Contacto"
+    }
+  },
+  "preloader": {
+    "tagline": "Ti Turing — Software Factory"
+  }
+}

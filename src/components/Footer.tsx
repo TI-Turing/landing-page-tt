@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 const FOOTER_LINKS = [
-  { label: 'Servicios', href: '#services'  },
-  { label: 'Stack',     href: '#tech'      },
-  { label: 'Nosotros',  href: '#about'     },
-  { label: 'Contacto',  href: '#contact'   },
+  { i18nKey: 'footer.links.services', href: '#services'  },
+  { i18nKey: 'footer.links.stack',    href: '#tech'      },
+  { i18nKey: 'footer.links.about',    href: '#about'     },
+  { i18nKey: 'footer.links.contact',  href: '#contact'   },
 ]
 
 export default function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer className="bg-tt-bg relative overflow-hidden">
       {/* Top divider */}
@@ -22,11 +25,11 @@ export default function Footer() {
           className="text-center"
         >
           <p className="font-mono text-white/15 text-xs tracking-[0.3em] uppercase mb-6">
-            {'// ready to build?'}
+            {t('footer.readyToBuild')}
           </p>
           <h3 className="font-heading text-4xl md:text-6xl lg:text-7xl text-white leading-none mb-8">
-            CONSTRUYAMOS{' '}
-            <span className="text-gradient">ALGO GRANDE</span>
+            {t('footer.titlePart1')}{' '}
+            <span className="text-gradient">{t('footer.titleHighlight')}</span>
           </h3>
           <motion.a
             href="#contact"
@@ -40,7 +43,7 @@ export default function Footer() {
                        hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]"
           >
             <span className="w-2 h-2 rounded-full bg-tt-green animate-pulse" />
-            Iniciar Proyecto
+            {t('footer.startProject')}
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -69,13 +72,13 @@ export default function Footer() {
           <nav className="flex gap-8">
             {FOOTER_LINKS.map(link => (
               <a
-                key={link.label}
+                key={link.i18nKey}
                 href={link.href}
                 data-cursor-hover
                 className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/20
                            hover:text-white/50 transition-colors duration-200"
               >
-                {link.label}
+                {t(link.i18nKey)}
               </a>
             ))}
           </nav>

@@ -3,21 +3,14 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useTypingEffect } from '@/hooks/useTypingEffect'
 import { useTextScramble } from '@/hooks/useTextReveal'
 import { useMagnetic } from '@/hooks/useMagnetic'
-
-const TYPING_PHRASES = [
-  'Construimos Software.',
-  'Aseguramos tu Sistema.',
-  'Escalamos tu Negocio.',
-  'Creamos Apps Móviles.',
-  'Dominamos el Código.',
-]
+import { useTranslation } from 'react-i18next'
 
 const FLOATING_SNIPPETS = [
   { code: 'const app = new TiTuring()',       top: '15%', left: '4%',   delay: 0    },
   { code: 'git push origin main',             top: '70%', left: '2%',   delay: 1.5  },
   { code: 'docker build -t tt-api .',         top: '28%', right: '3%',  delay: 0.8  },
   { code: 'npm run deploy --prod',            top: '78%', right: '5%',  delay: 2.0  },
-  { code: '> 200+ proyectos entregados',      top: '12%', right: '8%',  delay: 2.5  },
+  { code: 'snippetProjects',                  top: '12%', right: '8%',  delay: 2.5, isTranslated: true },
   { code: 'ssh root@server.tituring.com',     top: '55%', left: '1%',   delay: 0.5  },
   { code: 'kubectl apply -f deploy.yaml',     top: '42%', right: '1%',  delay: 1.2  },
   { code: 'SELECT * FROM projects;',          top: '88%', left: '8%',   delay: 3.0  },
@@ -212,6 +205,7 @@ function MagneticButton({
 }
 
 export default function Hero() {
+  const { t } = useTranslation()
   const [ready, setReady]     = useState(false)
   const containerRef          = useRef<HTMLDivElement>(null)
   const { scrollYProgress }   = useScroll({ target: containerRef, offset: ['start start', 'end start'] })
@@ -220,7 +214,8 @@ export default function Hero() {
   const textY                 = useTransform(scrollYProgress, [0, 0.5], ['0%', '20%'])
 
   const scrambled  = useTextScramble('TI TURING', ready, 25)
-  const typed      = useTypingEffect(TYPING_PHRASES)
+  const typingPhrases = t('hero.typingPhrases', { returnObjects: true }) as string[]
+  const typed      = useTypingEffect(typingPhrases)
 
   // Trigger scramble after mount
   const onReady = useCallback(() => setReady(true), [])
@@ -291,7 +286,7 @@ export default function Hero() {
             times: [0, 0.1, 0.85, 1],
           }}
         >
-          <span className="text-tt-green/50">$ </span>{s.code}
+          <span className="text-tt-green/50">$ </span>{'isTranslated' in s && s.isTranslated ? t(`hero.${s.code}`) : s.code}
         </motion.div>
       ))}
 
@@ -343,7 +338,7 @@ export default function Hero() {
         >
           <div className="h-px w-12 bg-gradient-to-r from-transparent to-tt-cyan/50" />
           <p className="font-mono text-tt-cyan text-xs uppercase tracking-[0.4em]">
-            Fábrica de Software
+            {t('hero.eyebrow')}
           </p>
           <div className="h-px w-12 bg-gradient-to-l from-transparent to-tt-cyan/50" />
         </motion.div>
@@ -405,13 +400,13 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-5 justify-center items-center"
         >
           <MagneticButton href="#services" variant="primary">
-            <span className="relative z-10">Ver Servicios</span>
+            <span className="relative z-10">{t('hero.viewServices')}</span>
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </MagneticButton>
           <MagneticButton href="#contact" variant="outline">
-            Contáctanos
+            {t('hero.contactUs')}
           </MagneticButton>
         </motion.div>
       </motion.div>
@@ -429,7 +424,7 @@ export default function Hero() {
           className="flex flex-col items-center gap-2"
         >
           <span className="font-mono text-[10px] text-white/20 tracking-[0.3em] uppercase">
-            Scroll
+            {t('hero.scroll')}
           </span>
           <div className="w-5 h-8 border border-white/20 rounded-full flex justify-center pt-1.5">
             <motion.div

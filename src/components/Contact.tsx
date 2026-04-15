@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FiMail, FiLinkedin, FiGithub, FiInstagram, FiArrowUpRight } from 'react-icons/fi'
 import { useMagnetic } from '@/hooks/useMagnetic'
 import { useSplitTextReveal } from '@/hooks/useTextReveal'
+import { useTranslation } from 'react-i18next'
 
 type FormState = { name: string; email: string; message: string }
 
@@ -49,6 +50,7 @@ function MagneticSocialLink({ social }: { social: typeof SOCIAL_LINKS[0] }) {
 }
 
 export default function Contact() {
+  const { t } = useTranslation()
   const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -93,7 +95,7 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="font-mono text-tt-cyan/60 text-xs tracking-[0.4em] uppercase mb-4"
           >
-            {'// contacto'}
+            {t('contact.eyebrow')}
           </motion.p>
 
           <div className="overflow-hidden">
@@ -103,8 +105,8 @@ export default function Contact() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="font-heading text-5xl md:text-7xl lg:text-8xl text-white leading-none"
             >
-              HABLEMOS DE TU{' '}
-              <span className="text-gradient">PROYECTO</span>
+              {t('contact.titlePart1')}{' '}
+              <span className="text-gradient">{t('contact.titleHighlight')}</span>
             </motion.h2>
           </div>
 
@@ -115,7 +117,7 @@ export default function Contact() {
             transition={{ delay: 0.3 }}
             className="font-body text-white/30 text-sm mt-5 max-w-md mx-auto"
           >
-            Estamos listos para construir tu próxima solución tecnológica.
+            {t('contact.subtitle')}
           </motion.p>
         </div>
 
@@ -135,7 +137,7 @@ export default function Contact() {
                     required
                     type="text"
                     name="name"
-                    placeholder="Tu nombre"
+                    placeholder={t('contact.form.name')}
                     value={form.name}
                     onChange={handleChange}
                     className={inputClass}
@@ -144,7 +146,7 @@ export default function Contact() {
                     required
                     type="email"
                     name="email"
-                    placeholder="tu@email.com"
+                    placeholder={t('contact.form.email')}
                     value={form.email}
                     onChange={handleChange}
                     className={inputClass}
@@ -154,7 +156,7 @@ export default function Contact() {
                   required
                   name="message"
                   rows={6}
-                  placeholder="Cuéntanos sobre tu proyecto..."
+                  placeholder={t('contact.form.message')}
                   value={form.message}
                   onChange={handleChange}
                   className={`${inputClass} resize-none`}
@@ -180,7 +182,7 @@ export default function Contact() {
                     />
                   ) : (
                     <>
-                      <span>Enviar Mensaje</span>
+                      <span>{t('contact.form.submit')}</span>
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
@@ -205,8 +207,8 @@ export default function Contact() {
                 >
                   <span className="text-tt-green text-2xl">&#10003;</span>
                 </motion.div>
-                <p className="font-heading text-2xl text-white mb-2">Mensaje enviado</p>
-                <p className="font-body text-white/40 text-sm">Te contactamos pronto.</p>
+                <p className="font-heading text-2xl text-white mb-2">{t('contact.success.title')}</p>
+                <p className="font-body text-white/40 text-sm">{t('contact.success.subtitle')}</p>
               </motion.div>
             )}
           </motion.div>
@@ -220,7 +222,7 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <p className="font-mono text-[10px] text-white/20 tracking-[0.3em] uppercase mb-4 pl-1">
-              También puedes encontrarnos en
+              {t('contact.socialLabel')}
             </p>
             {SOCIAL_LINKS.map(social => (
               <MagneticSocialLink key={social.label} social={social} />

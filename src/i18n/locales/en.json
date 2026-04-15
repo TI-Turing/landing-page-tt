@@ -1,0 +1,123 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "techStack": "Tech Stack",
+    "about": "About Us",
+    "contact": "Contact",
+    "contactUs": "Contact Us"
+  },
+  "hero": {
+    "eyebrow": "Software Factory",
+    "typingPhrases": [
+      "We Build Software.",
+      "We Secure Your System.",
+      "We Scale Your Business.",
+      "We Create Mobile Apps.",
+      "We Master the Code."
+    ],
+    "viewServices": "View Services",
+    "contactUs": "Contact Us",
+    "scroll": "Scroll",
+    "snippetProjects": "> 200+ projects delivered"
+  },
+  "services": {
+    "eyebrow": "// our services",
+    "titlePart1": "WHAT WE",
+    "titleHighlight": "DO",
+    "subtitle": "High-quality technology solutions for every stage of your business.",
+    "items": {
+      "webDev": {
+        "title": "Web Development",
+        "desc": "Modern web applications, SPAs and enterprise systems with React, Vue, Angular and Node.js.",
+        "tag": "frontend · backend · fullstack"
+      },
+      "mobileApps": {
+        "title": "Mobile Apps",
+        "desc": "Native and cross-platform apps for iOS and Android with React Native and Flutter.",
+        "tag": "iOS · Android · cross-platform"
+      },
+      "cybersecurity": {
+        "title": "Cybersecurity",
+        "desc": "Audits, pentesting, hardening and critical infrastructure protection.",
+        "tag": "pentest · audit · hardening"
+      },
+      "customSoftware": {
+        "title": "Custom Software",
+        "desc": "ERP, CRM systems and SaaS platforms designed exactly for your business.",
+        "tag": "ERP · CRM · SaaS"
+      },
+      "techConsulting": {
+        "title": "Tech Consulting",
+        "desc": "Solution architecture, cloud migration, optimization and digital strategy.",
+        "tag": "cloud · architecture · strategy"
+      },
+      "qaTesting": {
+        "title": "QA & Testing",
+        "desc": "Manual, automated, E2E and performance testing for reliable software.",
+        "tag": "E2E · automation · performance"
+      }
+    }
+  },
+  "techStack": {
+    "eyebrow": "// technologies",
+    "titlePart1": "OUR",
+    "titleHighlight": "STACK",
+    "categories": {
+      "all": "All",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "devops": "DevOps",
+      "mobile": "Mobile"
+    }
+  },
+  "about": {
+    "eyebrow": "// about us",
+    "titlePart1": "A",
+    "titleHighlight": "SOFTWARE",
+    "titlePart2": "FACTORY",
+    "paragraph1": "Ti Turing is a software development company founded with the mission of building high-quality technology solutions that drive the growth of businesses and startups.",
+    "paragraph2": "We combine agile methodologies with cutting-edge technologies to deliver products that don't just work — they scale, endure and generate real impact.",
+    "tags": ["Agile Methodology", "Scalable Code", "Security First", "Innovation", "Tailor-Made"],
+    "stats": {
+      "projects": "Projects\ndelivered",
+      "experience": "Years of\nexperience",
+      "clients": "Satisfied\nclients",
+      "technologies": "Technologies\nmastered"
+    },
+    "ctaTitle": "Let's talk about your project",
+    "ctaSubtitle": "We're ready to start."
+  },
+  "contact": {
+    "eyebrow": "// contact",
+    "titlePart1": "LET'S TALK ABOUT YOUR",
+    "titleHighlight": "PROJECT",
+    "subtitle": "We're ready to build your next technology solution.",
+    "form": {
+      "name": "Your name",
+      "email": "your@email.com",
+      "message": "Tell us about your project...",
+      "submit": "Send Message"
+    },
+    "success": {
+      "title": "Message sent",
+      "subtitle": "We'll contact you soon."
+    },
+    "socialLabel": "You can also find us at"
+  },
+  "footer": {
+    "readyToBuild": "// ready to build?",
+    "titlePart1": "LET'S BUILD",
+    "titleHighlight": "SOMETHING GREAT",
+    "startProject": "Start Project",
+    "links": {
+      "services": "Services",
+      "stack": "Stack",
+      "about": "About Us",
+      "contact": "Contact"
+    }
+  },
+  "preloader": {
+    "tagline": "Ti Turing — Software Factory"
+  }
+}

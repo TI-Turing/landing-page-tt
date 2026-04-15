@@ -8,6 +8,7 @@ import {
 } from 'react-icons/si'
 import { FiCloud } from 'react-icons/fi'
 import { useSplitTextReveal } from '@/hooks/useTextReveal'
+import { useTranslation } from 'react-i18next'
 
 type Tech = {
   icon: React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }>
@@ -40,11 +41,11 @@ const TECHS: Tech[] = [
 ]
 
 const CATEGORIES = [
-  { key: 'all',      label: 'Todas' },
-  { key: 'frontend', label: 'Frontend' },
-  { key: 'backend',  label: 'Backend' },
-  { key: 'devops',   label: 'DevOps' },
-  { key: 'mobile',   label: 'Mobile' },
+  { key: 'all',      i18nKey: 'all' },
+  { key: 'frontend', i18nKey: 'frontend' },
+  { key: 'backend',  i18nKey: 'backend' },
+  { key: 'devops',   i18nKey: 'devops' },
+  { key: 'mobile',   i18nKey: 'mobile' },
 ]
 
 // Marquee row
@@ -108,6 +109,7 @@ function TechCard({ tech, index }: { tech: Tech; index: number }) {
 }
 
 export default function TechStack() {
+  const { t } = useTranslation()
   const [filter, setFilter] = useState('all')
   const { ref: headingRef, isVisible } = useSplitTextReveal()
 
@@ -128,7 +130,7 @@ export default function TechStack() {
             transition={{ duration: 0.6 }}
             className="font-mono text-tt-green/60 text-xs tracking-[0.4em] uppercase mb-4"
           >
-            {'// tecnologías'}
+            {t('techStack.eyebrow')}
           </motion.p>
 
           <div className="overflow-hidden">
@@ -138,8 +140,8 @@ export default function TechStack() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="font-heading text-5xl md:text-7xl lg:text-8xl text-white leading-none"
             >
-              NUESTRO{' '}
-              <span className="text-tt-green">STACK</span>
+              {t('techStack.titlePart1')}{' '}
+              <span className="text-tt-green">{t('techStack.titleHighlight')}</span>
             </motion.h2>
           </div>
         </div>
@@ -164,7 +166,7 @@ export default function TechStack() {
                   : 'bg-transparent border-white/[0.06] text-white/35 hover:text-white/60 hover:border-white/[0.1]'
               }`}
             >
-              {cat.label}
+              {t(`techStack.categories.${cat.i18nKey}`)}
             </button>
           ))}
         </motion.div>

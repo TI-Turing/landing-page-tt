@@ -2,22 +2,24 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { useCountUp } from '@/hooks/useCountUp'
 import { useSplitTextReveal } from '@/hooks/useTextReveal'
+import { useTranslation } from 'react-i18next'
 
 type Stat = {
   value: number
   suffix: string
-  label: string
+  i18nKey: string
   icon: string
 }
 
 const STATS: Stat[] = [
-  { value: 200, suffix: '+', label: 'Proyectos\nentregados', icon: '{}' },
-  { value: 5,   suffix: '+', label: 'Años de\nexperiencia',  icon: '>_' },
-  { value: 50,  suffix: '+', label: 'Clientes\nsatisfechos', icon: '<>' },
-  { value: 16,  suffix: '+', label: 'Tecnologías\ndominadas', icon: '//' },
+  { value: 200, suffix: '+', i18nKey: 'projects',     icon: '{}' },
+  { value: 5,   suffix: '+', i18nKey: 'experience',   icon: '>_' },
+  { value: 50,  suffix: '+', i18nKey: 'clients',      icon: '<>' },
+  { value: 16,  suffix: '+', i18nKey: 'technologies', icon: '//' },
 ]
 
 function StatCard({ stat, index }: { stat: Stat; index: number }) {
+  const { t } = useTranslation()
   const { count, elRef } = useCountUp(stat.value, 2500)
 
   return (
@@ -43,7 +45,7 @@ function StatCard({ stat, index }: { stat: Stat; index: number }) {
       </p>
       <p className="font-body text-white/35 text-sm leading-snug whitespace-pre-line
                     group-hover:text-white/50 transition-colors duration-500">
-        {stat.label}
+        {t(`about.stats.${stat.i18nKey}`)}
       </p>
 
       {/* Bottom accent */}
@@ -60,6 +62,7 @@ function StatCard({ stat, index }: { stat: Stat; index: number }) {
 }
 
 export default function About() {
+  const { t } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -91,7 +94,7 @@ export default function About() {
               transition={{ duration: 0.6 }}
               className="font-mono text-tt-cyan/60 text-xs tracking-[0.4em] uppercase mb-5"
             >
-              {'// nosotros'}
+              {t('about.eyebrow')}
             </motion.p>
 
             <div ref={headingRef} className="overflow-hidden mb-8">
@@ -101,10 +104,10 @@ export default function About() {
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className="font-heading text-5xl md:text-6xl lg:text-7xl text-white uppercase leading-[0.9]"
               >
-                UNA{' '}
-                <span className="text-gradient">FÁBRICA</span>
+                {t('about.titlePart1')}{' '}
+                <span className="text-gradient">{t('about.titleHighlight')}</span>
                 <br />
-                DE SOFTWARE
+                {t('about.titlePart2')}
               </motion.h2>
             </div>
 
@@ -115,14 +118,10 @@ export default function About() {
               transition={{ delay: 0.2, duration: 0.6 }}
             >
               <p className="font-body text-white/45 leading-relaxed mb-5 text-base">
-                Ti Turing es una empresa de desarrollo de software fundada con la misión
-                de construir soluciones tecnológicas de alta calidad que impulsen el
-                crecimiento de empresas y emprendimientos.
+                {t('about.paragraph1')}
               </p>
               <p className="font-body text-white/45 leading-relaxed text-base mb-10">
-                Combinamos metodologías ágiles con tecnologías de vanguardia para
-                entregar productos que no solo funcionan — sino que escalan, perduran
-                y generan impacto real.
+                {t('about.paragraph2')}
               </p>
             </motion.div>
 
@@ -134,7 +133,7 @@ export default function About() {
               transition={{ delay: 0.4 }}
               className="flex flex-wrap gap-2 mb-10"
             >
-              {['Metodología Ágil', 'Código Escalable', 'Seguridad First', 'Innovación', 'A tu Medida'].map((tag, i) => (
+              {(t('about.tags', { returnObjects: true }) as string[]).map((tag, i) => (
                 <motion.span
                   key={tag}
                   initial={{ opacity: 0, x: -10 }}
@@ -168,7 +167,7 @@ export default function About() {
           {/* Right: stats grid */}
           <div className="grid grid-cols-2 gap-4 lg:mt-16">
             {STATS.map((stat, i) => (
-              <StatCard key={stat.label} stat={stat} index={i} />
+              <StatCard key={stat.i18nKey} stat={stat} index={i} />
             ))}
 
             {/* Bottom CTA card */}
@@ -185,8 +184,8 @@ export default function About() {
               data-cursor-hover
             >
               <div>
-                <p className="font-heading text-lg text-white">Hablemos de tu proyecto</p>
-                <p className="font-body text-white/30 text-sm">Estamos listos para empezar.</p>
+                <p className="font-heading text-lg text-white">{t('about.ctaTitle')}</p>
+                <p className="font-body text-white/30 text-sm">{t('about.ctaSubtitle')}</p>
               </div>
               <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/[0.08]
                               flex items-center justify-center group-hover:bg-tt-blue/20

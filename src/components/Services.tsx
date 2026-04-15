@@ -4,69 +4,57 @@ import {
   FiCode, FiSmartphone, FiShield, FiCpu, FiMessageSquare, FiCheckCircle,
 } from 'react-icons/fi'
 import { useSplitTextReveal } from '@/hooks/useTextReveal'
+import { useTranslation } from 'react-i18next'
 
 type Service = {
   icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>
-  title: string
-  desc: string
+  i18nKey: string
   glow: string
-  tag: string
   number: string
 }
 
 const SERVICES: Service[] = [
   {
     icon: FiCode,
-    title: 'Desarrollo Web',
-    desc: 'Aplicaciones web modernas, SPAs y sistemas enterprise con React, Vue, Angular y Node.js.',
+    i18nKey: 'webDev',
     glow: '#3b82f6',
-    tag: 'frontend · backend · fullstack',
     number: '01',
   },
   {
     icon: FiSmartphone,
-    title: 'Apps Móviles',
-    desc: 'Apps nativas y cross-platform para iOS y Android con React Native y Flutter.',
+    i18nKey: 'mobileApps',
     glow: '#06b6d4',
-    tag: 'iOS · Android · cross-platform',
     number: '02',
   },
   {
     icon: FiShield,
-    title: 'Ciberseguridad',
-    desc: 'Auditorías, pentesting, hardening y protección de infraestructura crítica.',
+    i18nKey: 'cybersecurity',
     glow: '#06b6d4',
-    tag: 'pentest · auditoría · hardening',
     number: '03',
   },
   {
     icon: FiCpu,
-    title: 'Software a Medida',
-    desc: 'Sistemas ERP, CRM y plataformas SaaS diseñadas exactamente para tu negocio.',
+    i18nKey: 'customSoftware',
     glow: '#22c55e',
-    tag: 'ERP · CRM · SaaS',
     number: '04',
   },
   {
     icon: FiMessageSquare,
-    title: 'Consultoría Tech',
-    desc: 'Arquitectura de soluciones, migración cloud, optimización y estrategia digital.',
+    i18nKey: 'techConsulting',
     glow: '#3b82f6',
-    tag: 'cloud · arquitectura · estrategia',
     number: '05',
   },
   {
     icon: FiCheckCircle,
-    title: 'QA & Testing',
-    desc: 'Testing manual, automatizado, E2E y de performance para software confiable.',
+    i18nKey: 'qaTesting',
     glow: '#22c55e',
-    tag: 'E2E · automatización · performance',
     number: '06',
   },
 ]
 
 // 3D Tilt card component
 function TiltCard({ svc, index }: { svc: Service; index: number }) {
+  const { t } = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
 
   const rotateX = useMotionValue(0)
@@ -161,18 +149,18 @@ function TiltCard({ svc, index }: { svc: Service; index: number }) {
 
         {/* Title */}
         <h3 className="font-heading text-xl text-white mb-1.5 tracking-wide">
-          {svc.title}
+          {t(`services.items.${svc.i18nKey}.title`)}
         </h3>
 
         {/* Tag */}
         <p className="font-mono text-[10px] text-white/25 mb-4 tracking-wider uppercase">
-          {svc.tag}
+          {t(`services.items.${svc.i18nKey}.tag`)}
         </p>
 
         {/* Description */}
         <p className="font-body text-white/40 text-sm leading-relaxed group-hover:text-white/55
                       transition-colors duration-500">
-          {svc.desc}
+          {t(`services.items.${svc.i18nKey}.desc`)}
         </p>
 
         {/* Bottom accent line */}
@@ -190,6 +178,7 @@ function TiltCard({ svc, index }: { svc: Service; index: number }) {
 }
 
 export default function Services() {
+  const { t } = useTranslation()
   const { ref: headingRef, isVisible } = useSplitTextReveal()
 
   return (
@@ -217,7 +206,7 @@ export default function Services() {
             transition={{ duration: 0.6 }}
             className="font-mono text-tt-cyan/60 text-xs tracking-[0.4em] uppercase mb-4"
           >
-            {'// nuestros servicios'}
+            {t('services.eyebrow')}
           </motion.p>
 
           <div className="overflow-hidden">
@@ -227,8 +216,8 @@ export default function Services() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="font-heading text-5xl md:text-7xl lg:text-8xl text-white leading-none"
             >
-              LO QUE{' '}
-              <span className="text-gradient">HACEMOS</span>
+              {t('services.titlePart1')}{' '}
+              <span className="text-gradient">{t('services.titleHighlight')}</span>
             </motion.h2>
           </div>
 
@@ -239,14 +228,14 @@ export default function Services() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="font-body text-white/30 text-sm mt-5 max-w-md mx-auto"
           >
-            Soluciones tecnológicas de alta calidad para cada etapa de tu negocio.
+            {t('services.subtitle')}
           </motion.p>
         </div>
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {SERVICES.map((svc, i) => (
-            <TiltCard key={svc.title} svc={svc} index={i} />
+            <TiltCard key={svc.i18nKey} svc={svc} index={i} />
           ))}
         </div>
       </div>
